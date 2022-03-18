@@ -61,10 +61,22 @@
 #           )
 
 
-def check_customer_paid(name ,melons, paid, melon_cost = 1.00):
-    customer_expected = melons * melon_cost
-    if customer_expected != paid:
-        print(f"{name} paid ${paid:.2f},",
-            f"expected ${customer_expected:.2f}")
+def check_customer_paid(path, melon_cost = 1.00):
+    
+    order_log = open(path)
 
-check_customer_paid("Gigi", 5, 3)
+    for line in order_log:
+        line = line.rstrip()
+        order = line.split('|')
+        name = order[1]
+        melons = float(order[2])
+        paid = float(order[3])
+
+        customer_expected = melons * melon_cost
+        if customer_expected != paid:
+            print(f"{name} paid ${paid:.2f},",
+                f"expected ${customer_expected:.2f}")
+
+    order_log.close()
+
+check_customer_paid('customer-orders.txt')
