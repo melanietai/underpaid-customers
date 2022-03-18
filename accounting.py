@@ -62,21 +62,24 @@
 
 
 def check_customer_paid(path, melon_cost = 1.00):
+    """calculate cost of melons and check who has underpaid or overpaid"""
     
+    # open file
     order_log = open(path)
 
+    # get each line in file
     for line in order_log:
-        line = line.rstrip()
-        order = line.split('|')
-        name = order[1]
-        melons = float(order[2])
-        paid = float(order[3])
+        line = line.rstrip() # remove whitespace to the right
+        order = line.split('|') # create tokenized list of strings separated by |
+        name = order[1] # retrieve the full_name
+        melons = float(order[2]) # retrieve amt of melons bought and convert str to float
+        paid = float(order[3]) # retrieve paid info and convert str to float
 
-        customer_expected = melons * melon_cost
-        if customer_expected != paid:
-            print(f"{name} paid ${paid:.2f},",
+        customer_expected = melons * melon_cost # calculate customer expected paid
+        if customer_expected != paid: # compare with actual paid
+            print(f"{name} paid ${paid:.2f},", # print actual paid and expected paid
                 f"expected ${customer_expected:.2f}")
 
-    order_log.close()
+    order_log.close() # close the file
 
-check_customer_paid('customer-orders.txt')
+check_customer_paid('customer-orders.txt') # call the function
